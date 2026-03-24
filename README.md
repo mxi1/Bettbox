@@ -41,6 +41,18 @@ Bettbox意为: Better Experience, Out of the box，卓越体验，亦可开箱�
 
 ---
 
+## 💻 开发语言 Top 5
+
+| 排名 | 语言 | 主要用途 |
+|------|------|---------|
+| 🥇 1 | Go | 代理内核与后端服务 |
+| 🥈 2 | Dart | Flutter UI 与应用逻辑 |
+| 🥉 3 | C/C++ | 原生插件与底层库 |
+| 4 | Kotlin | Android 平台原生代码 |
+| 5 | Swift | iOS / macOS 平台原生代码 |
+
+---
+
 ## 🛠️ 安装与下载
 
 请前往 [Releases](https://github.com/appshubcc/Bettbox/releases) 页面下载最新适合您平台和系统的安装包
