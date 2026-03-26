@@ -37,6 +37,22 @@ class _SmartAutoStopManagerState extends ConsumerState<SmartAutoStopManager> {
     super.initState();
     _initConnectivityListener();
     _initNativeNetworkListener();
+    ref.listenManual(vpnSettingProvider, (prev, next) {
+      if (prev?.smartAutoStop != next.smartAutoStop ||
+          prev?.smartAutoStopNetworks != next.smartAutoStopNetworks) {
+        _onSettingsChanged();
+      }
+    });
+    // Perform an initial network check after the first frame so that Smart
+    // Auto-Stop activates immediately if the VPN is already running and the
+    // device is on a matching network when the manager first mounts.
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!mounted) return;
+      final vpnProps = ref.read(vpnSettingProvider);
+      if (vpnProps.smartAutoStop) {
+        _checkCurrentNetwork();
+      }
+    });
   }
 
   void _initNativeNetworkListener() {
@@ -60,17 +76,6 @@ class _SmartAutoStopManagerState extends ConsumerState<SmartAutoStopManager> {
     final vpnProps = ref.read(vpnSettingProvider);
     if (!vpnProps.smartAutoStop) return;
     _debouncedCheckCurrentNetwork();
-  }
-
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    ref.listenManual(vpnSettingProvider, (prev, next) {
-      if (prev?.smartAutoStop != next.smartAutoStop ||
-          prev?.smartAutoStopNetworks != next.smartAutoStopNetworks) {
-        _onSettingsChanged();
-      }
-    });
   }
 
   void _initConnectivityListener() {

@@ -329,7 +329,7 @@ class Utils {
       });
       return addresses.first.address;
     }
-    return '';
+    return null;
   }
 
   SingleActivator controlSingleActivator(LogicalKeyboardKey trigger) {
